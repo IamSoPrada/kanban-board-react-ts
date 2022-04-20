@@ -1,5 +1,7 @@
 import {ColumnContainer, ColumnTitle, CardContainer} from "./styles"
 import {Card} from "./Card"
+import {AddNewItem} from "./AddNewItem"
+
 type ColumnProps = {
 	text: string;
 	children?: React.ReactNode;
@@ -12,6 +14,7 @@ export const Column = ({text}: ColumnProps) => {
 			<Card text="Создать первое typescript приложение" />
 			<Card text="Изучить основы typescript" />
 			<Card text="Начать активно использовать typescript" />
+			<AddNewItem toggleButtonText="+Добавить задачу" onAdd={console.log} dark/>
 		</ColumnContainer>
 	)
 }
