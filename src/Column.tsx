@@ -1,20 +1,35 @@
-import {ColumnContainer, ColumnTitle, CardContainer} from "./styles"
+import {ColumnContainer, ColumnTitle} from "./styles"
+import { useDispatch } from 'react-redux'
+import {addNewTask} from "./store/listsSlice"
 import {Card} from "./Card"
 import {AddNewItem} from "./AddNewItem"
 
+type Task = {
+	id:string
+	listId: string,
+	text: string
+}
+
 type ColumnProps = {
-	text: string;
+	id?: string,
+	columnName: string;
+	tasks: Task[],
 	children?: React.ReactNode;
 }
 
-export const Column = ({text}: ColumnProps) => {
+
+
+export const Column = ({columnName, tasks, id}: ColumnProps) => {
+	const dispatch = useDispatch()
+
+	const handleAddNewTask = (task:Task) => {
+		dispatch(addNewTask(task))
+	}
 	return (
 		<ColumnContainer>
-			<ColumnTitle>{text}</ColumnTitle>
-			<Card text="Создать первое typescript приложение" />
-			<Card text="Изучить основы typescript" />
-			<Card text="Начать активно использовать typescript" />
-			<AddNewItem toggleButtonText="+Добавить задачу" onAdd={console.log} dark/>
+			<ColumnTitle>{columnName}</ColumnTitle>
+			{tasks && tasks.map(({text, id})=> <Card key={id} text={text} />)}			
+			<AddNewItem toggleButtonText="+Добавить задачу" onAdd={handleAddNewTask} dark/>
 		</ColumnContainer>
 	)
 }
