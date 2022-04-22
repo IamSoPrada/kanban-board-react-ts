@@ -1,40 +1,54 @@
 import {useState} from 'react'
 import { nanoid } from 'nanoid'
 import {useFocus} from "./utils/useFocus"
-
 import { NewItemButton, NewItemFormContainer, NewItemInput } from './styles'
+import type {Task, List} from "./store/listsSlice"
 
-type Task = {
-	id:string
-	listId?: string,
-	text: string
-}
 
 type NewItemFormProps = {
-	listId?: string,
-	onAdd(task:Task): void
+	listId: string,
+	onAddNewTask?: (item: Task) => void;
+	onAddNewList?: (item: List) => void;
+	setShowForm: (showForm: boolean) => void;
 }
 
-export const NewItemForm = ({onAdd, listId} : NewItemFormProps) => {
+export const NewItemForm = ({onAddNewTask, onAddNewList, setShowForm, listId} : NewItemFormProps) => {
 	const [text, setText] = useState("")
 	const inputRef = useFocus()
 
-	const handleAddTaskOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
-		if(event.key === "Enter") {
+	const handleTaskObject = () => {
 			const task = {
 				id: nanoid(),
 				text,
 				listId
 			}
+			onAddNewTask && onAddNewTask(task)
+			setShowForm(false)
+	}
+	const handleListObject = () => {
+			const list = {
+				id: nanoid(),
+				columnName: text,
+				tasks: []
+			}
+			onAddNewList && onAddNewList(list)
+			setShowForm(false)
+	}
 
-			onAdd(task)
+	const handleAddTaskOnEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if(event.key === "Enter") {
+			onAddNewTask ? handleTaskObject() : handleListObject()
 		}
+	}
+
+	const handleAddOnClick = () => {
+		onAddNewTask ? handleTaskObject() : handleListObject()
 	}
 
 	return (
 		<NewItemFormContainer>
 			<NewItemInput onKeyPress={handleAddTaskOnEnter} ref={inputRef} value={text} onChange={(e)=> setText(e.target.value)} />
-			<NewItemButton onClick={()=> onAdd(text)}>
+			<NewItemButton onClick={handleAddOnClick}>
 				Добавить
 			</NewItemButton>
 		</NewItemFormContainer>

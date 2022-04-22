@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { nanoid } from 'nanoid'
-import {useSelector} from "react-redux"
-import {listsSelector} from "./store/listsSlice"
+import {useSelector, useDispatch} from "react-redux"
+import {listsSelector, addNewList} from "./store/listsSlice"
+import type {List} from "./store/listsSlice"
 
 import {
  AppContainer,
@@ -10,12 +11,17 @@ import {Column} from "./Column"
 import {AddNewItem} from "./AddNewItem"
 
 export function App() {
-  const [count, setCount] = useState(0)
   const lists = useSelector(listsSelector)
+
+  const dispatch = useDispatch()
+
+	const handleAddNewList = (list: List) => {
+		dispatch(addNewList(list))
+	}
   return (
     <AppContainer>
       {lists && lists.map(({columnName, tasks, id}) => <Column key={id} id={id} columnName={columnName} tasks={tasks}/>)}
-      <AddNewItem onAdd={console.log} toggleButtonText="+Добавить колонку" />
+      <AddNewItem listId={nanoid()} onAddNewList={handleAddNewList} toggleButtonText="+Добавить колонку" />
     </AppContainer>
   )
 }

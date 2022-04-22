@@ -1,29 +1,24 @@
 import {useState} from "react"
 import { AddItemButton } from './styles'
 import {NewItemForm} from './NewItemForm'
+import type {Task, List} from "./store/listsSlice"
 
-type Task = {
-	id:string
-	listId: string,
-	text: string
-}
 
 type AddNewItemProps = {
-	onAdd: (task: Task) => void;
+	listId: string,
+	onAddNewTask?: (item: Task) => void;
+	onAddNewList?: (item: List) => void;
 	toggleButtonText: string;
 	dark?:boolean
 }
 
 export const AddNewItem = (props: AddNewItemProps) => {
 	const [showForm, setShowForm ] = useState(false)
-	const {onAdd, toggleButtonText, dark} = props
+	const {onAddNewTask, onAddNewList, toggleButtonText, dark, listId} = props
 
 	if(showForm) {
 		return (
-			<NewItemForm onAdd={(task)=> {
-				onAdd(task) 
-				setShowForm(false)
-			}}/>
+			<NewItemForm listId={listId} onAddNewTask={onAddNewTask} onAddNewList={onAddNewList} setShowForm={setShowForm}/>
 		)
 	}
 

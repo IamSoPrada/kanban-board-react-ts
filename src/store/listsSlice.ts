@@ -1,19 +1,19 @@
 import { createSlice, PayloadAction  } from '@reduxjs/toolkit';
 import type { RootState } from './index'
 
- type Task = {
+export type Task = {
 	id:string
 	listId: string,
 	text: string
 }
 
-type List = {
+export type List = {
 	id: string
 	columnName: string
 	tasks: Task[]
 }
 
-type Lists= {
+export type Lists= {
 	lists: List[],
 }
 
@@ -36,7 +36,7 @@ const listsSlice = createSlice({
   name: 'lists',
   initialState,
   reducers : {
-	  addList:(state,  { payload }: PayloadAction<List> ) => {
+	  addNewList:(state,  { payload }: PayloadAction<List> ) => {
 		state.lists.push(payload)
 	  },
 	  removeList:(state,  { payload }: PayloadAction<List> ) => {
@@ -49,7 +49,7 @@ const listsSlice = createSlice({
   }
 })
 
-export const {addList, removeList, addNewTask} = listsSlice.actions
+export const {addNewList, removeList, addNewTask} = listsSlice.actions
 
 export const listsSelector = (state: RootState) => state.listsSlice.lists
 
