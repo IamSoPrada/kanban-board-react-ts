@@ -1,10 +1,10 @@
-import { CardContainer } from './styles';
+import React from "react";
+import { CardContainer } from "./styles";
 
 type CardProps = {
-	listId: string,
-	text: string,
-}
+  text: string;
+};
 
-export const Card = ({text, listId} : CardProps) => {
-	return <CardContainer>{text}</CardContainer>
+export function Card({ text }: CardProps) {
+  return <CardContainer>{text}</CardContainer>;
 }
