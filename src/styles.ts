@@ -2,15 +2,23 @@ import styled from "styled-components";
 
 export const AppContainer = styled.div`
   display: flex;
+  flex-wrap: wrap;
   align-items: flex-start;
   background-color: #3179ba;
   flex-direction: row;
   height: 100%;
-  padding: 20px;
+  padding: 10px;
   width: 100%;
 `;
+interface DragPreviewContainer {
+  isHidden?: boolean;
+}
 
-export const ColumnContainer = styled.div`
+export const DragPreviewContainer = styled.div<DragPreviewContainer>`
+  opacity: ${(props) => (props.isHidden ? 0.3 : 1)};
+`;
+
+export const ColumnContainer = styled(DragPreviewContainer)`
   background-color: #ebecf0;
   width: 300px;
   min-height: 40px;
@@ -22,9 +30,10 @@ export const ColumnContainer = styled.div`
 export const ColumnTitle = styled.div`
   padding: 6px 16px 12px;
   font-weight: bold;
+  max-width: fit-content;
 `;
 
-export const CardContainer = styled.div`
+export const CardContainer = styled(DragPreviewContainer)`
   background-color: #fff;
   cursor: pointer;
   margin-bottom: 0.5rem;
