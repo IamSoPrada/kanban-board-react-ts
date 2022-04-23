@@ -1,6 +1,7 @@
 import React from "react";
 import { nanoid } from "nanoid";
 import { useSelector, useDispatch } from "react-redux";
+import { CustomDragLayer } from "./CustomDragLayer";
 import { listsSelector, addNewList } from "./store/listsSlice";
 import type { List } from "./store/listsSlice";
 
@@ -18,6 +19,7 @@ export function App() {
   };
   return (
     <AppContainer>
+      <CustomDragLayer />
       {lists &&
         lists.map(({ columnName, tasks, id }) => (
           <Column key={id} id={id} columnName={columnName} tasks={tasks} />
