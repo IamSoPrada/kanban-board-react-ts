@@ -14,17 +14,10 @@ type ColumnProps = {
   id: string;
   columnName: string;
   tasks?: Task[];
-  children?: React.ReactNode;
   isPreview?: boolean;
 };
 
-export function Column({
-  columnName,
-  tasks,
-  id,
-  isPreview,
-  children,
-}: ColumnProps) {
+export function Column({ columnName, tasks, id, isPreview }: ColumnProps) {
   const draggedItem = useSelector(draggedItemSelector);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -53,7 +46,7 @@ export function Column({
     <ColumnContainer
       isPreview={isPreview}
       ref={ref}
-      isHidden={isHidden(draggedItem, "COLUMN", id)}
+      isHidden={isHidden(draggedItem, "COLUMN", id, isPreview)}
     >
       <ColumnTitle>{columnName}</ColumnTitle>
       {tasks && tasks.map(({ text, id }) => <Card key={id} text={text} />)}

@@ -15,9 +15,9 @@ export function CustomDragLayer() {
     <CustomDragLayerContainer>
       <DragPreviewWrapper position={currentOffset}>
         <Column
-          isPreview
           id={draggedItem.id}
           columnName={draggedItem.columnName}
+          isPreview
         />
       </DragPreviewWrapper>
     </CustomDragLayerContainer>
