@@ -17,7 +17,14 @@ export type List = {
 
 export type MoveList = {
   draggedId: string;
-  hoverId: string;
+  hoveredId: string;
+};
+
+export type MoveTask = {
+  draggedId: string;
+  hoveredId: string | null;
+  sourceListId: string;
+  targetListId: string;
 };
 
 export type Lists = {
@@ -32,7 +39,7 @@ const initialState: Lists = {
       columnName: "Todo",
       tasks: [
         {
-          id: "1",
+          id: "122",
           listId: "4f90d13a42",
           text: "Изучить стейт-менеджмент библиотеки",
         },
@@ -41,7 +48,9 @@ const initialState: Lists = {
     {
       id: "4f90d13a43",
       columnName: "В процессе",
-      tasks: [{ id: "1", listId: "4f90d13a43", text: "Изучение typescript" }],
+      tasks: [
+        { id: "1211", listId: "4f90d13a43", text: "Изучение typescript" },
+      ],
     },
   ],
   draggedItem: null,
@@ -62,21 +71,50 @@ const listsSlice = createSlice({
       list?.tasks.push(payload);
     },
     moveList: (state, { payload }: PayloadAction<MoveList>) => {
-      const { draggedId, hoverId } = payload;
+      const { draggedId, hoveredId } = payload;
       const draggedIndex = findItemIndexById(state.lists, draggedId);
-      const hoverIndex = findItemIndexById(state.lists, hoverId);
+      const hoverIndex = findItemIndexById(state.lists, hoveredId);
       state.lists = moveItem(state.lists, draggedIndex, hoverIndex);
     },
-    setDraggedItem: (state, { payload }: PayloadAction<DragItem | null>) => {
-      state.draggedItem = payload;
+    moveTask: (state, { payload }: PayloadAction<MoveTask>) => {
+      const { draggedId, hoveredId, sourceListId, targetListId } = payload;
+      const sourceListIndex = findItemIndexById(state.lists, sourceListId);
+      const targetListIndex = findItemIndexById(state.lists, targetListId);
+
+      const dragIndex = findItemIndexById(
+        state.lists[sourceListIndex].tasks,
+        draggedId
+      );
+
+      const hoverIndex = findItemIndexById(
+        state.lists[targetListIndex].tasks,
+        hoveredId
+      );
+
+      const item = state.lists[sourceListIndex].tasks[dragIndex];
+      state.lists[sourceListIndex].tasks.splice(dragIndex, 1);
+      state.lists[targetListIndex].tasks.splice(hoverIndex, 0, item);
+    },
+    setDraggedItem: (state, action: PayloadAction<DragItem | null>) => {
+      state.draggedItem = action.payload;
     },
   },
 });
 
-export const { addNewList, moveList, removeList, addNewTask, setDraggedItem } =
-  listsSlice.actions;
+export const {
+  addNewList,
+  moveTask,
+  moveList,
+  removeList,
+  addNewTask,
+  setDraggedItem,
+} = listsSlice.actions;
 
 export const listsSelector = (state: RootState) => state.listsSlice.lists;
+export const getTasksByListId = (lists: List[], listId: string) => {
+  return lists.find((list) => list.id === listId)?.tasks;
+};
+
 export const draggedItemSelector = (state: RootState) =>
   state.listsSlice.draggedItem;
 

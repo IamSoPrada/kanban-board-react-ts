@@ -5,7 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { isHidden } from "./utils/isHidden";
 import { useDragItem } from "./utils/useDragItem";
 import { ColumnContainer, ColumnTitle } from "./styles";
-import { addNewTask, moveList, draggedItemSelector } from "./store/listsSlice";
+import {
+  addNewTask,
+  moveList,
+  moveTask,
+  draggedItemSelector,
+  setDraggedItem,
+} from "./store/listsSlice";
 import { Card } from "./Card";
 import { AddNewItem } from "./AddNewItem";
 import type { Task } from "./store/listsSlice";
@@ -13,25 +19,37 @@ import type { Task } from "./store/listsSlice";
 type ColumnProps = {
   id: string;
   columnName: string;
-  tasks?: Task[];
   isPreview?: boolean;
+  tasks?: Task[];
 };
 
-export function Column({ columnName, tasks, id, isPreview }: ColumnProps) {
+export function Column({ columnName, id, isPreview, tasks }: ColumnProps) {
   const draggedItem = useSelector(draggedItemSelector);
   const ref = useRef<HTMLDivElement>(null);
 
   const [, drop] = useDrop({
-    accept: "COLUMN",
+    accept: ["COLUMN", "CARD"],
     hover: throttle(200, () => {
       if (!draggedItem) return;
       if (draggedItem.type === "COLUMN") {
         if (draggedItem.id === id) return;
         const payload = {
           draggedId: draggedItem.id,
-          hoverId: id,
+          hoveredId: id,
         };
         dispatch(moveList(payload));
+      } else {
+        if (draggedItem.listId === id) return;
+        if (tasks.length) return;
+        const payload = {
+          draggedId: draggedItem.id,
+          hoveredId: null,
+          sourceListId: draggedItem.listId,
+          targetListId: id,
+        };
+        console.log(draggedItem);
+        dispatch(moveTask(payload));
+        dispatch(setDraggedItem({ ...draggedItem, listId: id }));
       }
     }),
   });
@@ -49,7 +67,15 @@ export function Column({ columnName, tasks, id, isPreview }: ColumnProps) {
       isHidden={isHidden(draggedItem, "COLUMN", id, isPreview)}
     >
       <ColumnTitle>{columnName}</ColumnTitle>
-      {tasks && tasks.map(({ text, id }) => <Card key={id} text={text} />)}
+      {tasks &&
+        tasks.map((task) => (
+          <Card
+            key={task.id}
+            text={task.text}
+            listId={task.listId}
+            id={task.id}
+          />
+        ))}
       <AddNewItem
         toggleButtonText="+Добавить задачу"
         listId={id}
