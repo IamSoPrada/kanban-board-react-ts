@@ -15,3 +15,5 @@
 ![enter image description here](https://sun9-86.userapi.com/s/v1/if2/TeVTbqHGKk_F8OC3Cv5pJ7QDQgb45btS6dl1BEg0J2fFrhmL7ON5TWxiaSbhg0sSyyIqGxFRBD3cbDDbHelqCDAM.jpg?size=1087x516&quality=96&type=album)
 
 ![enter image description here](https://sun9-77.userapi.com/s/v1/if2/RbYzYZcyngFNnumGtnhBq0B7YlEpFcCNiuF1wZPi8iLKelzO4qDdpcu4vq0jyOTqV_-161AaGSITz3sldMB66XLP.jpg?size=1412x442&quality=96&type=album)
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/e5aea07e625eb68df90d/maintainability)](https://codeclimate.com/github/IamSoPrada/kanban-board-react-ts/maintainability)
