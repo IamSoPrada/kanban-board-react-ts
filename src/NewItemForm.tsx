@@ -21,7 +21,7 @@ export function NewItemForm({
   const inputRef = useFocus();
 
   const handleTaskObject = () => {
-    const task = {
+    const task: Task = {
       id: nanoid(),
       text,
       listId,

@@ -4,7 +4,7 @@ import type { RootState } from "./index";
 import type { DragItem } from "../DragItem";
 
 export type Task = {
-  type: string;
+  type?: string;
   id: string;
   listId: string;
   text: string;
