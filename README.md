@@ -1,4 +1,5 @@
 # Trello / Kanban board
+[![Maintainability](https://api.codeclimate.com/v1/badges/e5aea07e625eb68df90d/maintainability)](https://codeclimate.com/github/IamSoPrada/kanban-board-react-ts/maintainability)
 
 Данный репозиторий является pet проектом приложения Trello.
 Проект выложен на Netlify : [клик сюда](https://drag-n-drop-board.netlify.app/).
@@ -16,4 +17,4 @@
 
 ![enter image description here](https://sun9-77.userapi.com/s/v1/if2/RbYzYZcyngFNnumGtnhBq0B7YlEpFcCNiuF1wZPi8iLKelzO4qDdpcu4vq0jyOTqV_-161AaGSITz3sldMB66XLP.jpg?size=1412x442&quality=96&type=album)
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/e5aea07e625eb68df90d/maintainability)](https://codeclimate.com/github/IamSoPrada/kanban-board-react-ts/maintainability)
+
