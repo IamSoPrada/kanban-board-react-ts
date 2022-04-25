@@ -4,7 +4,7 @@ type Item = {
 
 export const findItemIndexById = <TItem extends Item>(
   items: TItem[],
-  id: string
+  id: string | null
 ) => {
   return items.findIndex((item: TItem) => item.id === id);
 };

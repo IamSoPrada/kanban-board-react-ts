@@ -4,6 +4,7 @@ import type { RootState } from "./index";
 import type { DragItem } from "../DragItem";
 
 export type Task = {
+  type: string;
   id: string;
   listId: string;
   text: string;
@@ -25,6 +26,7 @@ export type MoveTask = {
   hoveredId: string | null;
   sourceListId: string;
   targetListId: string;
+  draggedItem: Task;
 };
 
 export type Lists = {
@@ -37,20 +39,12 @@ const initialState: Lists = {
     {
       id: "4f90d13a42",
       columnName: "Todo",
-      tasks: [
-        {
-          id: "122",
-          listId: "4f90d13a42",
-          text: "Изучить стейт-менеджмент библиотеки",
-        },
-      ],
+      tasks: [],
     },
     {
       id: "4f90d13a43",
       columnName: "В процессе",
-      tasks: [
-        { id: "1211", listId: "4f90d13a43", text: "Изучение typescript" },
-      ],
+      tasks: [],
     },
   ],
   draggedItem: null,
@@ -77,7 +71,8 @@ const listsSlice = createSlice({
       state.lists = moveItem(state.lists, draggedIndex, hoverIndex);
     },
     moveTask: (state, { payload }: PayloadAction<MoveTask>) => {
-      const { draggedId, hoveredId, sourceListId, targetListId } = payload;
+      const { draggedId, hoveredId, sourceListId, targetListId, draggedItem } =
+        payload;
       const sourceListIndex = findItemIndexById(state.lists, sourceListId);
       const targetListIndex = findItemIndexById(state.lists, targetListId);
 
@@ -91,9 +86,8 @@ const listsSlice = createSlice({
         hoveredId
       );
 
-      const item = state.lists[sourceListIndex].tasks[dragIndex];
       state.lists[sourceListIndex].tasks.splice(dragIndex, 1);
-      state.lists[targetListIndex].tasks.splice(hoverIndex, 0, item);
+      state.lists[targetListIndex].tasks.splice(hoverIndex, 0, draggedItem);
     },
     setDraggedItem: (state, action: PayloadAction<DragItem | null>) => {
       state.draggedItem = action.payload;

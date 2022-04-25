@@ -40,14 +40,14 @@ export function Column({ columnName, id, isPreview, tasks }: ColumnProps) {
         dispatch(moveList(payload));
       } else {
         if (draggedItem.listId === id) return;
-        if (tasks.length) return;
+        if (tasks && tasks.length) return;
         const payload = {
           draggedId: draggedItem.id,
           hoveredId: null,
           sourceListId: draggedItem.listId,
           targetListId: id,
+          draggedItem: { ...draggedItem, listId: id },
         };
-        console.log(draggedItem);
         dispatch(moveTask(payload));
         dispatch(setDraggedItem({ ...draggedItem, listId: id }));
       }

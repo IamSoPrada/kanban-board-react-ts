@@ -14,7 +14,7 @@ import { CardContainer } from "./styles";
 type CardProps = {
   id: string;
   listId: string;
-  text?: string;
+  text: string;
   isPreview?: boolean;
 };
 
@@ -36,6 +36,7 @@ export function Card({ text, listId, isPreview, id }: CardProps) {
         hoveredId: id,
         sourceListId: draggedItem.listId,
         targetListId: listId,
+        draggedItem: { ...draggedItem, listId },
       };
       dispatch(moveTask(payload));
       dispatch(setDraggedItem({ ...draggedItem, listId }));
