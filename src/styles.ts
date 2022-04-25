@@ -4,7 +4,6 @@ export const AppContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: center;
   background-color: #3179ba;
   flex-direction: row;
   height: 100%;
