@@ -1,6 +1,6 @@
 import React from "react";
 import { nanoid } from "nanoid";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { CustomDragLayer } from "./CustomDragLayer";
 import { listsSelector, addNewList } from "./store/listsSlice";
 import type { List } from "./store/listsSlice";
@@ -10,9 +10,9 @@ import { Column } from "./Column";
 import { AddNewItem } from "./AddNewItem";
 
 export function App() {
-  const lists = useSelector(listsSelector);
+  const lists = useAppSelector(listsSelector);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleAddNewList = (list: List) => {
     dispatch(addNewList(list));

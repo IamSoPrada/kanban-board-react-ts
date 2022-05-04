@@ -1,13 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import { useDragLayer } from "react-dnd";
+import { useAppSelector } from "./store/hooks";
 import { DragPreviewWrapper, CustomDragLayerContainer } from "./styles";
 import { draggedItemSelector } from "./store/listsSlice";
 import { Column } from "./Column";
 import { Card } from "./Card";
 
 export function CustomDragLayer() {
-  const draggedItem = useSelector(draggedItemSelector);
+  const draggedItem = useAppSelector(draggedItemSelector);
   const { currentOffset } = useDragLayer((monitor) => ({
     currentOffset: monitor.getSourceClientOffset(),
   }));

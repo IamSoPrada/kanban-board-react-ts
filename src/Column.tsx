@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useDrop } from "react-dnd";
 import { throttle } from "throttle-debounce-ts";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { isHidden } from "./utils/isHidden";
 import { useDragItem } from "./utils/useDragItem";
 import { ColumnContainer, ColumnTitle } from "./styles";
@@ -24,7 +24,7 @@ type ColumnProps = {
 };
 
 export function Column({ columnName, id, isPreview, tasks }: ColumnProps) {
-  const draggedItem = useSelector(draggedItemSelector);
+  const draggedItem = useAppSelector(draggedItemSelector);
   const ref = useRef<HTMLDivElement>(null);
 
   const [, drop] = useDrop({
@@ -54,7 +54,7 @@ export function Column({ columnName, id, isPreview, tasks }: ColumnProps) {
     }),
   });
   const { drag } = useDragItem({ type: "COLUMN", id, columnName });
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleAddNewTask = (task: Task) => {
     dispatch(addNewTask(task));

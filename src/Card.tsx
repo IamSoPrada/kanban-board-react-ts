@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import { useDrop } from "react-dnd";
 import { throttle } from "throttle-debounce-ts";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import { isHidden } from "./utils/isHidden";
 import { useDragItem } from "./utils/useDragItem";
 import {
@@ -19,8 +19,8 @@ type CardProps = {
 };
 
 export function Card({ text, listId, isPreview, id }: CardProps) {
-  const dispatch = useDispatch();
-  const draggedItem = useSelector(draggedItemSelector);
+  const dispatch = useAppDispatch();
+  const draggedItem = useAppSelector(draggedItemSelector);
   const { drag } = useDragItem({ type: "CARD", id, text, listId });
   const ref = useRef<HTMLDivElement>(null);
   const [, drop] = useDrop({
