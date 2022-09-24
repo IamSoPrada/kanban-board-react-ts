@@ -1,7 +1,7 @@
 # Trello / Kanban board
 [![Maintainability](https://api.codeclimate.com/v1/badges/e5aea07e625eb68df90d/maintainability)](https://codeclimate.com/github/IamSoPrada/kanban-board-react-ts/maintainability)
 
-This repository is a pet project of the Trello application. The project is posted on Netlify  : [click here](https://drag-n-drop-board.netlify.app/).
+This repository is my pet project, clone of the Trello application. The project is posted on Netlify  : [click here](https://drag-n-drop-board.netlify.app/).
 
 **Used stack :** 
 +	[React](https://reactjs.org/) + [Typescript](https://www.typescriptlang.org/)
